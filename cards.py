@@ -1,3 +1,4 @@
+import random
 def makecards():
     # Quick function to create the cards for the game
     cardslist=[]
@@ -12,3 +13,9 @@ def makecards():
         i[2].append('h') # Heart
         i[3].append('d') # Diamond
     return cardslist
+class Deck():
+    def __init__(self,deckamnt=1):
+        pass
+    def draw():
+        #random.randint()
+        pass
