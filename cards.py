@@ -19,3 +19,9 @@ class Deck():
     def draw():
         #random.randint()
         pass
+class Hand():
+    def __init__(self):
+        pass
+    def deal():
+        pass
+    
