@@ -13,5 +13,7 @@ class Deck():
     def draw():
         #random.randint()
         pass
+    def shuffle():
+        pass
 
 
