@@ -14,3 +14,22 @@ while running:
     clock.tick(60)
 
 pygame.quit()
+
+class Window():
+    def __init__(self,height, width):
+        self.rect = pygame.Rect(0,0,width,height)
+        self.width = width
+        self.height = height
+        pygame.init()
+
+        # most users and tutorials call it "screen"
+        self.screen = pygame.display.set_mode(self.rect.size)
+
+        #self.Player_Hand = Player_Hand()
+        #se
+
+        # self.sprites_list = []
+
+        # self.add_sprite(Card("Image", 100, 400))
+
+        # self.remove_last_sprite()
