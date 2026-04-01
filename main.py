@@ -1,15 +1,24 @@
 import pygame
-gamechoice=int(input("Please select a game: 1: Blackjack, 2: Poker, 3: Solitaire, 0: Quit"))
-if gamechoice==1:
-    pygame.init()
-    # run blackjack (in development)
-elif gamechoice==2:
-    pygame.init()
-    # need to implement poker
-elif gamechoice==3:
-    pygame.init()
-    # need to implement solitaire
-else:
-    print("Goodbye.")
-    pygame.quit()
 
+pygame.init()
+
+screen = pygame.display.set_mode((1280,720))
+
+clock= pygame.time.Clock()
+
+while True:
+    # reads user input
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            raise SystemExit
+
+    #logic updates (to do later)
+
+
+    screen.fill("green")
+
+    #Graphics render (to do)
+
+    pygame.display.flip() # refresh screen display
+    clock.tick(60) # wait until next frame (runs 60FPS)
