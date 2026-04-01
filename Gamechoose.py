@@ -1,3 +1,4 @@
+import pygame
 gamechoice=int(input("Please select a game: 1: Blackjack, 2: Poker, 3: Solitaire, 0: Quit"))
 if gamechoice==1:
     pygame.init()
