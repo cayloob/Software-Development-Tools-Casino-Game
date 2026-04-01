@@ -17,10 +17,9 @@ class Deck():
     # DECK FORMAT: [[1,(card)],[2,(card)]...]
     def __init__(self,deckamnt=1):
         self._cardslist=makecards()
-    def draw():
+    def draw(self):
         #random.randint()
     def shuffle():
-
         # randomizes the order of cards in the deck
         # METHOD: make second list of cards
         # move cards into 1 dimensional list in random order
