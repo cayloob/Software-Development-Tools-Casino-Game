@@ -24,10 +24,11 @@ class Deck():
         # METHOD: make second list of cards
         # move cards into 1 dimensional list in random order
         newcardset=[]
-        for card in self._cardslist:
-            #TODO: try and see if theres a way to make it pick a random order of numbers EXCLUSIVE
-            position=random.randint(1,52)
-            newcard=[position,card]
+        for i in range(1,len(self._cardslist)):
+            #COMPLETE: try and see if theres a way to make it pick a random order of numbers EXCLUSIVE
+            #random.sample(range(r),i): makes a list of i numbers, randomly selected from 1-r, without duplicates
+            position = random.sample(range(52),52)
+            newcard = [position[i],self._cardslist[i]]
         newcardset.sort()
         self._cardslist=newcardset
 
