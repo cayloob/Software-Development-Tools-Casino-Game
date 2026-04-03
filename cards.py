@@ -18,6 +18,7 @@ class Deck():
     def __init__(self,deckamnt=1):
         self._cardslist=makecards()
     def draw(self):
+        pass
         #random.randint()
     def shuffle(self):
         # randomizes the order of cards in the deck
