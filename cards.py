@@ -1,4 +1,22 @@
 import random
+class Card():
+    def __init__(self,value,suit):
+        self.value = value
+        self.suit = suit
+    def draw(self):
+        if self.suit == 1:
+            #Suit is spades
+            pass
+        if self.suit == 2:
+            #Suit is hearts
+            pass
+        if self.suit == 3:
+            #Suit is diamonds
+            pass
+        if self.suit == 4:
+            #Suit is clubs
+            pass
+
 def makecards():
     # NOTE: Cards object going to be made, so this code is likely useless
     # Saving for later though
@@ -9,7 +27,10 @@ def makecards():
     k="s"
     for i in range(1,14):
         for j in range(1,5):
-            cardvalue=[i,j,k]
+            #This is where i is the carval and j is the card suit
+            card =Card(i,j)
+            cardslist.append(card)
+            # cardvalue=[i,j,k]
             
     # TODO: make cardslist one dimensional for convenience
     return cardslist
