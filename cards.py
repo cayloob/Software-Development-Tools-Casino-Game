@@ -1,27 +1,32 @@
 import random
 import pygame
+
+
 class Card(pygame.sprite.Sprite):
-    def __init__(self,value,suit):
+    def __init__(self, value, suit):
         super().__init__()
         self.value = value
         self.suit = suit
-        self.image = pygame.image.load("assets\AU_card_back.png.png").convert_alpha()
+        name = "assets\AU_card_back.png.png"
+        self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (640,360) 
+        self.rect.center = (640, 360) 
         self.image = pygame.transform.scale(self.image, (150, 150))
+
     def draw(self):
         if self.suit == 1:
-            #Suit is spades
+            # Suit is spades
             pass
         if self.suit == 2:
-            #Suit is hearts
+            # Suit is hearts
             pass
         if self.suit == 3:
-            #Suit is diamonds
+            # Suit is diamonds
             pass
         if self.suit == 4:
-            #Suit is clubs
+            # Suit is clubs
             pass
+
 
 def makecards():
     # NOTE: Cards object going to be made, so this code is likely useless
