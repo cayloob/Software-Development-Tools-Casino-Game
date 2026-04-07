@@ -16,15 +16,15 @@ font = pygame.font.SysFont('roboto', 60)
 pygame.display.set_caption('The Alfred Casino')
 
 clock= pygame.time.Clock()
-
+c1 = Card(1,1)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     
-
+    
     screen.fill("green")
-
+    screen.blit(c1.image,c1.rect.center)
 
     pygame.display.flip() # refresh screen display
     clock.tick(60) # wait until next frame (runs 60FPS)
