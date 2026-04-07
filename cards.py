@@ -63,7 +63,7 @@ class Deck():
             # order of numbers EXCLUSIVE
             # random.sample(range(r),i): makes a list of i numbers, randomly
             # selected from 1-r, without duplicates
-            position = random.sample(range(52), 52)
+            position = random.sample(range(len(self.cardslist)), len(self.cardslist))
             newcard = [position[i], self.cardslist[i]]
             newcardset.append(newcard)
         self.cardslist = newcardset
