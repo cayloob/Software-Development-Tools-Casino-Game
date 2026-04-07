@@ -8,7 +8,6 @@ class DealerBlackJackHand(BlackJackHand):
     # face up
     def __init__(self):
         super.__init__(BlackJackHand(cardslist))
-    
 
 
 class DealerAI(self):
