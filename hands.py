@@ -9,10 +9,12 @@ class Hand():
 class BlackJackHand(Hand):
     def __init__(self,cards_list = []):
         super().__init__(cards_list)
+        
     def check_total(self):
         total = 0
         ace_as_eleven = True
         for card in self.cards_list:
+            print(card.value)
             if card.value > 10:
                 total+=10
             elif card.value == 1:
@@ -26,11 +28,16 @@ class BlackJackHand(Hand):
                 total += card.value
             if total>21 and ace_as_eleven ==False:
                 print('Bust')
-                break
+                return -1
             elif total>21:
                 total -=10
                 ace_as_eleven = True
+
         return total
+    def add_card(self, deck):
+        super().add_card(deck)
+
+
 c1 = Card(1,1)
 c2 = Card(10,2)
 cards_list = [c1,c2]
@@ -40,6 +47,9 @@ deck.shuffle()
 
 hand = BlackJackHand()
 
+hand.add_card(deck)
+hand.add_card(deck)
+print(hand.check_total())
 hand.add_card(deck)
 hand.add_card(deck)
 print(hand.check_total())

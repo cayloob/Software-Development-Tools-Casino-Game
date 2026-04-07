@@ -53,19 +53,20 @@ class Deck():
     def draw(self):
         # random.randint()
         nextcard = self.cardslist.pop()
-        return nextcard[1]
+        return nextcard
 
     def shuffle(self):
         # randomizes the order of cards in the deck
         # METHOD: make second list of cards
         # move cards into 1 dimensional list in random order
         newcardset = []
-        for i in range(1, len(self.cardslist)):
-            # COMPLETE: try and see if theres a way to make it pick a random
-            # order of numbers EXCLUSIVE
-            # random.sample(range(r),i): makes a list of i numbers, randomly
-            # selected from 1-r, without duplicates
-            position = random.sample(range(len(self.cardslist)), len(self.cardslist))
-            newcard = [position[i], self.cardslist[i]]
-            newcardset.append(newcard)
+        
+        # COMPLETE: try and see if theres a way to make it pick a random
+        # order of numbers EXCLUSIVE
+        # random.sample(range(r),i): makes a list of i numbers, randomly
+        # selected from 1-r, without duplicates
+        position_list = random.sample(range(len(self.cardslist)), len(self.cardslist))
+        for position in position_list:
+            newcardset.append(self.cardslist[position])
+            
         self.cardslist = newcardset
