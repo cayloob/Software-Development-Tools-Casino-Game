@@ -1,5 +1,5 @@
 import pygame
-
+from cards import Card
 pygame.init()
 
 '''AU_logo = pygame.image.load("AU_logo.png")
@@ -15,21 +15,16 @@ font = pygame.font.SysFont('roboto', 60)
 
 pygame.display.set_caption('The Alfred Casino')
 
-running = True
-clock = pygame.time.Clock()
+clock= pygame.time.Clock()
 
-
-while running:
+while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     
-    text = font.render("Welcome to the Alfred Casino", True, "white")
-    textrect = text.get_rect()
-    textrect.center = (screen_width/2, screen_height/6)
 
-    screen.blit(text, textrect)
-    pygame.display.flip()  # refresh screen display
-    #clock.tick(60) # wait until next frame (runs 60FPS)
+    screen.fill("green")
 
-pygame.quit()
+
+    pygame.display.flip() # refresh screen display
+    clock.tick(60) # wait until next frame (runs 60FPS)
