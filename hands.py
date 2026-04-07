@@ -1,4 +1,5 @@
-from cards import Card
+from cards import Card, Deck
+import pygame
 class Hand():
     def __init__(self,cards_list):
         self.cards_list = cards_list
@@ -6,7 +7,7 @@ class Hand():
         self.cards_list.append(deck.draw())
 
 class BlackJackHand(Hand):
-    def __init__(self,cards_list):
+    def __init__(self,cards_list = []):
         super().__init__(cards_list)
     def check_total(self):
         total = 0
@@ -34,8 +35,13 @@ c1 = Card(1,1)
 c2 = Card(10,2)
 cards_list = [c1,c2]
 
-hand = BlackJackHand(cards_list)
+deck = Deck()
+deck.shuffle()
 
+hand = BlackJackHand()
+
+hand.add_card(deck)
+hand.add_card(deck)
 print(hand.check_total())
 
 

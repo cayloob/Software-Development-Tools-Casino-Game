@@ -8,12 +8,13 @@ class Card(pygame.sprite.Sprite):
         self.value = value
         self.suit = suit
         name = "assets\AU_card_back.png.png"
+        
+
+    def draw(self):
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (640, 360) 
         self.image = pygame.transform.scale(self.image, (150, 150))
-
-    def draw(self):
         if self.suit == 1:
             # Suit is spades
             pass
@@ -38,7 +39,8 @@ def makecards():
     k = "s"
     for i in range(1, 14):
         for j in range(1, 5):
-            cardvalue = [i, j, k]
+            card = Card(i,j)
+            cardslist.append(card)
     # TODO: make cardslist one dimensional for convenience
     return cardslist
 
@@ -50,7 +52,7 @@ class Deck():
 
     def draw(self):
         # random.randint()
-        nextcard = self.cardslist.popleft()
+        nextcard = self.cardslist.pop()
         return nextcard[1]
 
     def shuffle(self):
