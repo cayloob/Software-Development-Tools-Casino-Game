@@ -1,3 +1,4 @@
+from cards import Card
 class Hand():
     def __init__(self,cards_list):
         self.cards_list = cards_list
@@ -29,5 +30,12 @@ class BlackJackHand(Hand):
                 total -=10
                 ace_as_eleven = True
         return total
+c1 = Card(1,1)
+c2 = Card(10,2)
+cards_list = [c1,c2]
+
+hand = BlackJackHand(cards_list)
+
+print(hand.check_total())
 
 
