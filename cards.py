@@ -42,7 +42,7 @@ def makecards():
     # TODO: make cardslist one dimensional for convenience
     return cardslist
 class Deck():
-    # DECK FORMAT: [[1,(card)],[2,(card)]...]
+    # DECK FORMAT: [card,card]...]
     def __init__(self,deckamnt=1):
         self._cardslist=makecards()
     def draw(self):
@@ -50,7 +50,7 @@ class Deck():
         nextcard=self._cardslist.popleft()
         return nextcard[1]
 
-    def shuffle():
+    def shuffle(self):
         # randomizes the order of cards in the deck
         # METHOD: make second list of cards
         # move cards into 1 dimensional list in random order
