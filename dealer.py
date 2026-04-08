@@ -13,17 +13,19 @@ class DealerBlackJackHand(BlackJackHand):
         # one card should be visible, one should be hidden
 
 
-class DealerAI():
+class DealerBlackJackAI(DealerBlackJackHand):
     # dealer AI rules: dealer always hits on
     # <=15, else stands
     # Dealer wins ties, except on 21
-    currval = check_total
+    currval = DealerBlackJackHand.check_total()
     if currval < 16:
         # hit
-        DealerHand.add_card()
+        DealerBlackJackHand.add_card()
+    else:
+        return EndGame(PlayerHand, DealerBlackJackHand)
 
 
-def EndGame():
+def EndGame(PlayerHand, DealerHand):
     # check if dealer's hand is acceptable
     # then check if player's hand wins
     playertotal = PlayerHand.check_total()
