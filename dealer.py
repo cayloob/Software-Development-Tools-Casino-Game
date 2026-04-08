@@ -12,12 +12,13 @@ class DealerBlackJackHand(BlackJackHand):
         self.add_card()
         # one card should be visible, one should be hidden
 
-class DealerAI(self):
+
+class DealerAI():
     # dealer AI rules: dealer always hits on
     # <=15, else stands
     # Dealer wins ties, except on 21
-    currval=check_total
-    if currval<16:
+    currval = check_total
+    if currval < 16:
         # hit
         DealerHand.add_card()
 
@@ -25,9 +26,16 @@ class DealerAI(self):
 def EndGame():
     # check if dealer's hand is acceptable
     # then check if player's hand wins
-    if playertotal > 21:
-        print("You lose"):
+    playertotal = PlayerHand.check_total()
+    if playertotal == 21:
+        print("Blackjack! You win!")
+    elif playertotal > 21:
+        print("You busted. You lose...")
     else:
         dealertotal = DealerHand.check_total()
-        if dealertotal>21:
-            print("You win!")
+        if dealertotal > 21:
+            print("Dealer busted. You win!")
+        elif dealertotal < playertotal:
+            print("Your hand is higher than the dealer's. You win!")
+        else:
+            print("The dealer's hand is better. You lose...")
