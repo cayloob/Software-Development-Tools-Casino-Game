@@ -7,7 +7,10 @@ class Card(pygame.sprite.Sprite):
         super().__init__()
         self.value = value
         self.suit = suit
+        self.suit_num_to_str = {1:'Spades',2:'Hearts',3:'Diamonds',4:'Clubs'}
         name = "assets\AU_card_back.png.png"
+    def __str__(self):
+        return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
         
 
     def draw(self):

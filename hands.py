@@ -7,6 +7,11 @@ class Hand():
     def add_card(self, deck):
         self.cards_list.append(deck.draw())
 
+    def __str__(self):
+        hand = ''
+        for card in self.cards_list:
+            hand = hand + str(card)+' '
+        return hand
 
 class BlackJackHand(Hand):
     def __init__(self,cards_list = []):
@@ -14,9 +19,8 @@ class BlackJackHand(Hand):
 
     def check_total(self):
         total = 0
-        ace_as_eleven = True
+        ace_as_eleven = False
         for card in self.cards_list:
-            print(card.value)
             if card.value > 10:
                 total += 10
             elif card.value == 1:
@@ -28,12 +32,12 @@ class BlackJackHand(Hand):
                     total += 1
             else:
                 total += card.value
-            if total > 21 and ace_as_eleven == False:
-                print('Bust')
-                break
-            elif total>21:
+
+            if total > 21 and ace_as_eleven == True:
                 total -=10
-                ace_as_eleven = True
+                ace_as_eleven = False
+            elif total > 21:
+                print('Bust')
 
         return total
 c1 = Card(1,1)
@@ -51,3 +55,4 @@ print(hand.check_total())
 hand.add_card(deck)
 hand.add_card(deck)
 print(hand.check_total())
+print(hand)
