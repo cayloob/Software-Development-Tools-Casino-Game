@@ -1,5 +1,7 @@
 from cards import Card, Deck
 import pygame
+
+
 class Hand():
     def __init__(self, cards_list):
         self.cards_list = cards_list
@@ -9,7 +11,7 @@ class Hand():
 
 
 class BlackJackHand(Hand):
-    def __init__(self,cards_list = []):
+    def __init__(self, cards_list=[]):
         super().__init__(cards_list)
 
     def check_total(self):
@@ -28,17 +30,19 @@ class BlackJackHand(Hand):
                     total += 1
             else:
                 total += card.value
-            if total > 21 and ace_as_eleven == False:
+            if total > 21 and ace_as_eleven is False:
                 print('Bust')
                 break
-            elif total>21:
-                total -=10
+            elif total > 21:
+                total -= 10
                 ace_as_eleven = True
 
         return total
-c1 = Card(1,1)
-c2 = Card(10,2)
-cards_list = [c1,c2]
+
+
+c1 = Card(1, 1)
+c2 = Card(10, 2)
+cards_list = [c1, c2]
 
 deck = Deck()
 deck.shuffle()
