@@ -8,16 +8,18 @@ class Card(pygame.sprite.Sprite):
         self.value = value
         self.suit = suit
         self.suit_num_to_str = {1:'Spades',2:'Hearts',3:'Diamonds',4:'Clubs'}
-        name = "assets\AU_card_back.png.png"
+        
     def __str__(self):
         return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
         
-
-    def draw(self):
+    def create(self):
+        name = "assets\AU_card_back.png.png"
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (640, 360) 
         self.image = pygame.transform.scale(self.image, (150, 150))
+    def draw(self):
+        
         if self.suit == 1:
             # Suit is spades
             pass

@@ -17,6 +17,7 @@ pygame.display.set_caption('The Alfred Casino')
 
 clock= pygame.time.Clock()
 c1 = Card(1,1)
+c1.create()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
