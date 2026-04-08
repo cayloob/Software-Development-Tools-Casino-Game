@@ -13,6 +13,8 @@ class Card(pygame.sprite.Sprite):
         return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
         
     def create(self):
+        # Use this to make the sprite drawing images of the card this can be moved to the draw function
+        # I moved this from __init__ because that broke the hands.py tests
         name = "assets\AU_card_back.png.png"
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
