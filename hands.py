@@ -34,29 +34,31 @@ class BlackJackHand(Hand):
                     total += 1
             else:
                 total += card.value
-            if total > 21 and ace_as_eleven == False:
-                print('Bust')
-                break
-            elif total>21:
+            if total > 21 and ace_as_eleven == True:
                 total -=10
                 ace_as_eleven = True
+                
+                
+            elif total>21:
+                print('Bust')
+                
 
         return total
 
 
-c1 = Card(1, 1)
-c2 = Card(10, 2)
-cards_list = [c1, c2]
+# c1 = Card(1, 1)
+# c2 = Card(10, 2)
+# cards_list = [c1, c2]
 
-deck = Deck()
-deck.shuffle()
+# deck = Deck()
+# deck.shuffle()
 
-hand = BlackJackHand()
+# hand = BlackJackHand()
 
-hand.add_card(deck)
-hand.add_card(deck)
-print(hand.check_total())
-hand.add_card(deck)
-hand.add_card(deck)
-print(hand.check_total())
-print(hand)
+# hand.add_card(deck)
+# hand.add_card(deck)
+# print(hand.check_total())
+# hand.add_card(deck)
+# hand.add_card(deck)
+# print(hand.check_total())
+# print(hand)
