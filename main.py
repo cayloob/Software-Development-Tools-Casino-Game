@@ -25,7 +25,8 @@ win = 0
 font = pygame.font.Font(None, 36) 
 total = 0
 dealer_hand = dealer.DealerBlackJackHand(deck=deck)
-while True:
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
