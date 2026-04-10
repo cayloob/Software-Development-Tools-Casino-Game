@@ -15,6 +15,7 @@ class Hand():
             hand = hand + str(card)+' '
         return hand
 
+
 class BlackJackHand(Hand):
     def __init__(self, cards_list=[]):
         super().__init__(cards_list)
@@ -27,22 +28,18 @@ class BlackJackHand(Hand):
                 total += 10
             elif card.value == 1:
                 # Ace added this is going to be an issue :/
-                if total <= 10: 
+                if total <= 10:
                     ace_as_eleven = True
                     total += 11
                 else:
                     total += 1
             else:
                 total += card.value
-            if total > 21 and ace_as_eleven == True:
-                total -=10
+            if total > 21 and ace_as_eleven is True:
+                total -= 10
                 ace_as_eleven = True
-                
-                
-            elif total>21:
+            elif total > 21:
                 print('Bust')
-                
-
         return total
 
 

@@ -6,14 +6,14 @@ import cards
 class DealerBlackJackHand(hands.BlackJackHand):
     # dealer special rule: one card starts
     # face up
-    def __init__(self,deck, cards_list=[]):
+    def __init__(self, deck, cards_list=[]):
         super().__init__(cards_list)
         self.add_card(deck)
         self.add_card(deck)
         # one card should be visible, one should be hidden
 
 
-def dealer_play(dealer_hand,player_hand,deck):
+def dealer_play(dealer_hand, player_hand, deck):
     # dealer AI rules: dealer always hits on
     # <=15, else stands
     # Dealer wins ties, except on 21
@@ -22,8 +22,7 @@ def dealer_play(dealer_hand,player_hand,deck):
     while curval < 16:
         dealer_hand.add_card(deck)
         curval = dealer_hand.check_total()
-    return EndGame(player_hand,dealer_hand)
-            
+    return EndGame(player_hand, dealer_hand)
 
 
 def EndGame(PlayerHand, DealerHand):

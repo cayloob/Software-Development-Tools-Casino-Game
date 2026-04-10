@@ -7,21 +7,23 @@ class Card(pygame.sprite.Sprite):
         super().__init__()
         self.value = value
         self.suit = suit
-        self.suit_num_to_str = {1:'Spades',2:'Hearts',3:'Diamonds',4:'Clubs'}
-        
+        suit_dic = {1: 'Spades', 2: 'Hearts', 3: 'Diamonds', 4: 'Clubs'}
+        self.suit_num_to_str = suit_dic
+
     def __str__(self):
         return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
-        
+
     def create(self):
-        # Use this to make the sprite drawing images of the card this can be moved to the draw function
+        # Use this to make the sprite drawing images
+        # # of the card this can be moved to the draw function
         # I moved this from __init__ because that broke the hands.py tests
         name = "assets\AU_card_back.png.png"
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = (640, 360) 
+        self.rect.center = (640, 360)
         self.image = pygame.transform.scale(self.image, (150, 150))
+
     def draw(self):
-        
         if self.suit == 1:
             # Suit is spades
             pass
@@ -46,7 +48,7 @@ def makecards():
     k = "s"
     for i in range(1, 14):
         for j in range(1, 5):
-            card = Card(i,j)
+            card = Card(i, j)
             cardslist.append(card)
     # TODO: make cardslist one dimensional for convenience
     return cardslist
@@ -67,13 +69,13 @@ class Deck():
         # METHOD: make second list of cards
         # move cards into 1 dimensional list in random order
         newcardset = []
-        
         # COMPLETE: try and see if theres a way to make it pick a random
         # order of numbers EXCLUSIVE
         # random.sample(range(r),i): makes a list of i numbers, randomly
         # selected from 1-r, without duplicates
-        position_list = random.sample(range(len(self.cardslist)), len(self.cardslist))
+        s = self.cardslist
+        position_list = random.sample(range(s), s)
         for position in position_list:
             newcardset.append(self.cardslist[position])
-            
+
         self.cardslist = newcardset
