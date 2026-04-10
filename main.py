@@ -57,12 +57,12 @@ while running:
     for i, card in enumerate(hand.cards_list):
         # Making the player's cards appear on the screen
         card.create()
-        screen.blit(card.image, ((card.rect.center[0]+(10*i)), (card.rect.center[1]+(10*i))))
+        screen.blit(card.image,((card.rect.center[0]+(20*i)+100),(card.rect.center[1]+(20*i)+100)))
 
     for i, card in enumerate(dealer_hand.cards_list):
         # Making the dealer's cards appear on the screen
         card.create()
-        screen.blit(card.image, ((card.rect.center[0]+(10*i)-100), (card.rect.center[1]+(10*i)-100)))
+        screen.blit(card.image,((card.rect.center[0]+(10*i)-100),(card.rect.center[1]+(10*i)-100)))
 
     pygame.display.flip()  # refresh screen display
     clock.tick(60)  # wait until next frame (runs 60FPS)

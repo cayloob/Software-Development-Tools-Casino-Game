@@ -7,9 +7,8 @@ class Card(pygame.sprite.Sprite):
         super().__init__()
         self.value = value
         self.suit = suit
-        suit_dic = {1: 'Spades', 2: 'Hearts', 3: 'Diamonds', 4: 'Clubs'}
-        self.suit_num_to_str = suit_dic
-
+        self.suit_num_to_str = {1:'Spades',2:'Hearts',3:'Diamonds',4:'Clubs'}
+        
     def __str__(self):
         return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
 
@@ -17,7 +16,10 @@ class Card(pygame.sprite.Sprite):
         # Use this to make the sprite drawing images
         # # of the card this can be moved to the draw function
         # I moved this from __init__ because that broke the hands.py tests
-        name = "assets\AU_card_back.png.png"
+        if self.value >2 and self.value <11:
+            name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}{self.value}.png'
+        else:
+            name = f'AU_card_deck\hearts_jack_unfinished.png'
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (640, 360)
