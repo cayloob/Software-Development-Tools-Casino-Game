@@ -17,9 +17,10 @@ class Hand():
 
 
 class BlackJackHand(Hand):
-    def __init__(self, cards_list=[]):
+    def __init__(self, bet, cards_list=[],money=100):
         super().__init__(cards_list)
-
+        self.money = money
+        self.bet = bet
     def check_total(self):
         total = 0
         ace_as_eleven = False
