@@ -19,7 +19,15 @@ class Card(pygame.sprite.Sprite):
         if self.value >2 and self.value <11:
             name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}{self.value}.png'
         else:
-            name = f'AU_card_deck\hearts_jack_unfinished.png'
+            if self.value ==1:
+                name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}_ace.png'
+            elif self.value ==11:
+                name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}_jack_unfinished.png'
+            elif self.value == 12:
+                name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}_queen_unfinished.png'
+            elif self.value == 13:
+                name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}_king_unfinished.png'
+
         self.image = pygame.image.load(name).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = (640, 360)
