@@ -38,7 +38,7 @@ class BlackJackHand(Hand):
                 total += card.value
             if total > 21 and ace_as_eleven is True:
                 total -= 10
-                ace_as_eleven = True
+                ace_as_eleven = False
             elif total > 21:
                 print('Bust')
         return total

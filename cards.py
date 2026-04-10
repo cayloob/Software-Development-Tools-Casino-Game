@@ -7,7 +7,7 @@ class Card(pygame.sprite.Sprite):
         super().__init__()
         self.value = value
         self.suit = suit
-        self.suit_num_to_str = {1:'Spades',2:'Hearts',3:'Diamonds',4:'Clubs'}
+        self.suit_num_to_str = {1:'spades',2:'hearts',3:'diamonds',4:'clubs'}
         
     def __str__(self):
         return str(self.value) + ' ' + str(self.suit_num_to_str[self.suit])
