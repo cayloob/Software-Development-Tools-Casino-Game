@@ -22,7 +22,7 @@ hand = BlackJackHand()
 deck = Deck()
 deck.shuffle()
 win = 0
-font = pygame.font.Font(None, 36) 
+font = pygame.font.Font(None, 36)
 total = 0
 dealer_hand = dealer.DealerBlackJackHand(deck=deck)
 running = True
@@ -57,12 +57,16 @@ while running:
     for i, card in enumerate(hand.cards_list):
         # Making the player's cards appear on the screen
         card.create()
-        screen.blit(card.image,((card.rect.center[0]+(20*i)+100),(card.rect.center[1]+(20*i)+100)))
+        screen.blit(card.image,
+                    ((card.rect.center[0]+(20*i)+100),
+                     (card.rect.center[1]+(20*i)+100)))
 
     for i, card in enumerate(dealer_hand.cards_list):
         # Making the dealer's cards appear on the screen
         card.create()
-        screen.blit(card.image,((card.rect.center[0]+(20*i)-100),(card.rect.center[1]+(20*i)-100)))
+        screen.blit(card.image,
+                    ((card.rect.center[0]+(20*i)-100),
+                     (card.rect.center[1]+(20*i)-100)))
 
     pygame.display.flip()  # refresh screen display
     clock.tick(60)  # wait until next frame (runs 60FPS)
