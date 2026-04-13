@@ -16,7 +16,7 @@ class Card(pygame.sprite.Sprite):
         # Use this to make the sprite drawing images
         # # of the card this can be moved to the draw function
         # I moved this from __init__ because that broke the hands.py tests
-        if self.value >2 and self.value <11:
+        if self.value >=2 and self.value <11:
             name = f'AU_card_deck\{self.suit_num_to_str[self.suit]}{self.value}.png'
         else:
             if self.value ==1:
