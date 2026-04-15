@@ -3,7 +3,6 @@ from cards import Card, Deck
 from hands import BlackJackHand
 import dealer
 
-
 class casino:
     def __init__(self):
         pygame.init()
@@ -104,3 +103,5 @@ class casino:
 
             pygame.display.flip()  # refresh screen display
             self.clock.tick(60)  # wait until next frame (runs 60FPS)
+
+casino()
