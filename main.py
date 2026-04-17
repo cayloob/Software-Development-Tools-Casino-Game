@@ -68,11 +68,15 @@ class casino:
                 if event.type == pygame.KEYDOWN:
                     #If its an 's' Key then player wants to stand, run the stand code
                     if event.key == pygame.K_s:
-                        self.win = dealer.dealer_play(self.dealer_hand,self.hand,self.deck)
+                        if self.win == 0:
+                            self.win = dealer.dealer_play(self.dealer_hand,self.hand,self.deck)
                     #If its an 'h' Key then player wants to hit, run the hit code
                     if event.key == pygame.K_h:
-                        self.hand.add_card(self.deck)
-                        self.total = self.hand.check_total()
+                        if self.win == 0:
+                            self.hand.add_card(self.deck)
+                            self.total = self.hand.check_total()
+                            if self.total > 21:
+                                self.win = -1
 
             if self.win == -1:
                 #If the player lost run this code
