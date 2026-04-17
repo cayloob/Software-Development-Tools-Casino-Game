@@ -10,7 +10,26 @@ class casino:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height - 60))
         pygame.display.set_caption('The Alfred Casino')
         self.font = pygame.font.SysFont("arial", 60)
+        self.font2 = pygame.font.SysFont("arial", 100)
+        self.font3 = pygame.font.SysFont("arial", 35)
         self.clock= pygame.time.Clock()
+
+        self.fiat_bux= 1000
+
+        self.coin_head = pygame.image.load("assets\coin_head.png").convert_alpha()
+        self.coin_tail = pygame.image.load("assets\coin_tail.png").convert_alpha()
+
+        self.coin_head_rect = self.coin_head.get_rect()
+        self.coin_tail_rect = self.coin_tail.get_rect()
+
+        self.quit= self.font.render("Leave Casino", None, "white")
+        self.quit_rect= self.quit.get_rect()
+        
+        self.play_again = self.font.render("Play again", None, "white")
+        self.play_again_rect = self.play_again.get_rect()
+
+        self.back_to_main = self.font.render("Back to Menu", None, "white")
+        self.back_to_main_rect = self.back_to_main.get_rect()
 
         self.hand = BlackJackHand()
         self.deck = Deck()
@@ -35,9 +54,17 @@ class casino:
         play_blackjack_rect = play_blackjack.get_rect()
         play_blackjack_rect.center = (self.screen_width/2, self.screen_height/2)
 
+        f_bux = self.font3.render(f"Fiat Bux: {self.fiat_bux}", None, "white")
+        f_bux_rect = f_bux.get_rect()
+        f_bux_rect.center = (250, 100)
+
+        self.coin_head_rect.center = (100, 100)
+
         pygame.draw.rect(self.screen, "gray54", play_blackjack_rect)
         self.screen.blit(play_blackjack, play_blackjack_rect)
         self.screen.blit(welcome, weclome_rect)
+        self.screen.blit(self.coin_head, self.coin_head_rect)
+        self.screen.blit(f_bux,f_bux_rect)
             
         pygame.display.flip()
 
@@ -52,11 +79,14 @@ class casino:
                     if play_blackjack_rect.collidepoint(mouse_pos):
                         self.blackjack()
 
-        #pygame.quit()
-
     def blackjack(self):
         self.screen.fill("antiquewhite3")
         pygame.display.update()
+
+        self.win = 0
+        self.total = 0
+
+        self.fiat_bux -= 5
 
         while self.running:
             for event in pygame.event.get():
@@ -78,17 +108,13 @@ class casino:
                             if self.total > 21:
                                 self.win = -1
 
-            if self.win == -1:
-                #If the player lost run this code
-                self.screen.fill("red")
-            elif self.win == 1:
-                #If the player won run this code
-                self.screen.fill("green")
+            if self.win != 0:
+                self.game_over()
             else:
                 #If it is in a normal state run this code
                 self.screen.fill("antiquewhite3")
             #Create the score text and blit to screen
-            score_surface = self.font.render(f"Total: {self.total}", True, (255, 255, 255))
+            score_surface = self.font.render(f"Total: {self.total}", True, "white")
             self.screen.blit(score_surface, (10, 10))
 
             for i, card in enumerate(self.hand.cards_list):
@@ -107,5 +133,55 @@ class casino:
 
             pygame.display.flip()  # refresh screen display
             self.clock.tick(60)  # wait until next frame (runs 60FPS)
+
+    def game_over(self):
+        won= self.font2.render("You Win!", None, "white")
+        won_rect = won.get_rect()
+        won_rect.center = (self.screen_width/2, self.screen_height/6)
+
+        lost= self.font2.render("You Lose!", None, "white")
+        lost_rect = lost.get_rect()
+        lost_rect.center = (self.screen_width/2, self.screen_height/6)
+
+        self.play_again_rect.center = (self.screen_width/2, self.screen_height/2)
+        self.quit_rect.center = (self.screen_width *.75, self.screen_height/2)
+        self.back_to_main_rect.center = (self.screen_width/4, self.screen_height/2)
+
+        if self.win == -1:
+            self.screen.fill("red")
+            self.screen.blit(lost, lost_rect)
+        else:
+            self.fiat_bux += 100
+            self.screen.fill("chartreuse3")
+            self.screen.blit(won, won_rect)
+
+        pygame.draw.rect(self.screen, "gray54", self.play_again_rect)
+        pygame.draw.rect(self.screen, "gray54", self.quit_rect)
+        pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
+
+        self.screen.blit(self.quit, self.quit_rect)
+        self.screen.blit(self.play_again, self.play_again_rect)
+        self.screen.blit(self.back_to_main, self.back_to_main_rect)
+
+        pygame.display.flip()
+
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    self.running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if self.quit_rect.collidepoint(mouse_pos):
+                        pygame.quit()
+                        self.running = False
+                    if self.play_again_rect.collidepoint(mouse_pos):
+                        self.blackjack()
+                    if self.back_to_main_rect.collidepoint(mouse_pos):
+                        self.main_menu()
+
+                    
+                        
+                    
 
 casino()
