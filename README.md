@@ -1,6 +1,7 @@
-# Casino Game
+# Casino Game    <img src="AU_card_deck/diamonds_ace.png" alt="Team Logo" width="50" height="50"/>
 
-![Team Logo](https://github.com/cayloob/Software-Development-Tools-Casino-Game/blob/main/AU_card_deck/clubs_ace.png)
+
+
 
 A casino style game, in which a player may people a handful of casino games. This was built using Python and Pygame.
 
@@ -10,7 +11,8 @@ This project uses a pygame based format that allows the user to play games, E.g 
 
 ### Features
 
-Single-player style game
+- Single-player style game
+
 
 ### Contributers
 
