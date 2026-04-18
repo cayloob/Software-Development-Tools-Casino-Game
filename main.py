@@ -89,7 +89,8 @@ class casino:
                         self.blackjack()
                     if flip_rect.collidepoint(mouse_pos):
                         self.coin_toss()
-
+    
+                  
     def blackjack(self):
         self.screen.fill("antiquewhite3")
 
@@ -98,7 +99,7 @@ class casino:
 
         self.game = "blackjack"
 
-        self.fiat_bux -= 5
+        self.fiat_bux -= 100
 
         while self.running:
             for event in pygame.event.get():
