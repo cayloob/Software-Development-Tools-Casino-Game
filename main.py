@@ -8,8 +8,10 @@ import random
 class casino:
     def __init__(self):
         pygame.init()
-        self.screen_width, self.screen_height = pygame.display.get_desktop_sizes()[0]
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height - 60))
+        self.screen_width,
+        self.screen_height = pygame.display.get_desktop_sizes()[0]
+        self.screen = pygame.display.set_mode((self.screen_width,
+                                              self.screen_height - 60))
         pygame.display.set_caption('The Alfred Casino')
         self.font = pygame.font.SysFont("arial", 60)
         self.font2 = pygame.font.SysFont("arial", 100)
@@ -18,8 +20,10 @@ class casino:
 
         self.fiat_bux = 1000
 
-        self.coin_head = pygame.image.load("assets\coin_head.png").convert_alpha()
-        self.coin_tail = pygame.image.load("assets\coin_tail.png").convert_alpha()
+        tail = "assets\coin_tail.png"
+        head = "assets\coin_head.png"
+        self.coin_head = pygame.image.load(head).convert_alpha()
+        self.coin_tail = pygame.image.load(tail).convert_alpha()
 
         self.coin_head_rect = self.coin_head.get_rect()
         self.coin_tail_rect = self.coin_tail.get_rect()
@@ -50,13 +54,15 @@ class casino:
     def main_menu(self):
         self.screen.fill("antiquewhite3")
 
-        welcome = self.font.render("Welcome to the Alfred University Casino", True, "white")
+        welcome = self.font.render("Welcome to the Alfred University Casino",
+                                   True, "white")
         weclome_rect = welcome.get_rect()
         weclome_rect.center = (self.screen_width/2, self.screen_height/6)
 
         play_blackjack = self.font.render("Play Blackjack", True, "white")
         play_blackjack_rect = play_blackjack.get_rect()
-        play_blackjack_rect.center = (self.screen_width/2, self.screen_height/2)
+        play_blackjack_rect.center = (self.screen_width/2,
+                                      self.screen_height/2)
 
         flip = self.font3.render("Flip a Coin", True, "white")
         flip_rect = flip.get_rect()
@@ -109,11 +115,14 @@ class casino:
 
                 # Check if the event type is a button press
                 if event.type == pygame.KEYDOWN:
-                    # If its an 's' Key then player wants to stand, run the stand code
+                    # If its an 's' Key then player
+                    # wants to stand, run the stand code
                     if event.key == pygame.K_s:
                         if self.win == 0:
-                            self.win = dealer.dealer_play(self.dealer_hand, self.hand, self.deck)
-                    # If its an 'h' Key then player wants to hit, run the hit code
+                            self.win = dealer.dealer_play(self.dealer_hand,
+                                                          self.hand, self.deck)
+                    # If its an 'h' Key then player
+                    # wants to hit, run the hit code
                     if event.key == pygame.K_h:
                         if self.win == 0:
                             self.hand.add_card(self.deck)
@@ -127,7 +136,8 @@ class casino:
                 # If it is in a normal state run this code
                 self.screen.fill("antiquewhite3")
             # Create the score text and blit to screen
-            score_surface = self.font.render(f"Total: {self.total}", True, "white")
+            score_surface = self.font.render(f"Total: {self.total}",
+                                             True, "white")
             self.screen.blit(score_surface, (10, 10))
 
             for i, card in enumerate(self.hand.cards_list):
