@@ -4,6 +4,7 @@ from hands import BlackJackHand
 import dealer
 import random
 
+
 class casino:
     def __init__(self):
         pygame.init()
@@ -13,9 +14,9 @@ class casino:
         self.font = pygame.font.SysFont("arial", 60)
         self.font2 = pygame.font.SysFont("arial", 100)
         self.font3 = pygame.font.SysFont("arial", 35)
-        self.clock= pygame.time.Clock()
+        self.clock = pygame.time.Clock()
 
-        self.fiat_bux= 1000
+        self.fiat_bux = 1000
 
         self.coin_head = pygame.image.load("assets\coin_head.png").convert_alpha()
         self.coin_tail = pygame.image.load("assets\coin_tail.png").convert_alpha()
@@ -23,9 +24,9 @@ class casino:
         self.coin_head_rect = self.coin_head.get_rect()
         self.coin_tail_rect = self.coin_tail.get_rect()
 
-        self.quit= self.font.render("Leave Casino", None, "white")
-        self.quit_rect= self.quit.get_rect()
-        
+        self.quit = self.font.render("Leave Casino", None, "white")
+        self.quit_rect = self.quit.get_rect()
+
         self.play_again = self.font.render("Play again", None, "white")
         self.play_again_rect = self.play_again.get_rect()
 
@@ -37,9 +38,9 @@ class casino:
         self.deck.shuffle()
         self.win = 0
         self.total = 0
-        self.dealer_hand = dealer.DealerBlackJackHand(deck= self.deck)
+        self.dealer_hand = dealer.DealerBlackJackHand(deck=self.deck)
 
-        self.choice= 0
+        self.choice = 0
         self.game = None
 
         self.running = True
@@ -50,7 +51,7 @@ class casino:
         self.screen.fill("antiquewhite3")
 
         welcome = self.font.render("Welcome to the Alfred University Casino", True, "white")
-        weclome_rect= welcome.get_rect()
+        weclome_rect = welcome.get_rect()
         weclome_rect.center = (self.screen_width/2, self.screen_height/6)
 
         play_blackjack = self.font.render("Play Blackjack", True, "white")
@@ -70,11 +71,11 @@ class casino:
         pygame.draw.rect(self.screen, "gray54", play_blackjack_rect)
         pygame.draw.rect(self.screen, "gray54", flip_rect)
         self.screen.blit(play_blackjack, play_blackjack_rect)
-        self.screen.blit(flip,flip_rect)
+        self.screen.blit(flip, flip_rect)
         self.screen.blit(welcome, weclome_rect)
         self.screen.blit(self.coin_head, self.coin_head_rect)
-        self.screen.blit(f_bux,f_bux_rect)
-            
+        self.screen.blit(f_bux, f_bux_rect)
+
         pygame.display.flip()
 
         while self.running:
@@ -89,8 +90,7 @@ class casino:
                         self.blackjack()
                     if flip_rect.collidepoint(mouse_pos):
                         self.coin_toss()
-    
-                  
+
     def blackjack(self):
         self.screen.fill("antiquewhite3")
 
@@ -107,13 +107,13 @@ class casino:
                     pygame.quit()
                     self.running = False
 
-                #Check if the event type is a button press
+                # Check if the event type is a button press
                 if event.type == pygame.KEYDOWN:
-                    #If its an 's' Key then player wants to stand, run the stand code
+                    # If its an 's' Key then player wants to stand, run the stand code
                     if event.key == pygame.K_s:
                         if self.win == 0:
-                            self.win = dealer.dealer_play(self.dealer_hand,self.hand,self.deck)
-                    #If its an 'h' Key then player wants to hit, run the hit code
+                            self.win = dealer.dealer_play(self.dealer_hand, self.hand, self.deck)
+                    # If its an 'h' Key then player wants to hit, run the hit code
                     if event.key == pygame.K_h:
                         if self.win == 0:
                             self.hand.add_card(self.deck)
@@ -124,41 +124,42 @@ class casino:
             if self.win != 0:
                 self.game_over()
             else:
-                #If it is in a normal state run this code
+                # If it is in a normal state run this code
                 self.screen.fill("antiquewhite3")
-            #Create the score text and blit to screen
+            # Create the score text and blit to screen
             score_surface = self.font.render(f"Total: {self.total}", True, "white")
             self.screen.blit(score_surface, (10, 10))
 
             for i, card in enumerate(self.hand.cards_list):
-            # Making the player's cards appear on the screen
+                # Making the player's cards appear on the screen
                 card.create()
                 self.screen.blit(card.image,
-                            ((card.rect.center[0]+(20*i)+100),
-                            (card.rect.center[1]+(20*i)+100)))
+                                 ((card.rect.center[0]+(20*i)+100),
+                                  (card.rect.center[1]+(20*i)+100)))
 
             for i, card in enumerate(self.dealer_hand.cards_list):
                 # Making the dealer's cards appear on the screen
                 card.create()
                 self.screen.blit(card.image,
-                            ((card.rect.center[0]+(20*i)-100),
-                            (card.rect.center[1]+(20*i)-100)))
+                                 ((card.rect.center[0]+(20*i)-100),
+                                  (card.rect.center[1]+(20*i)-100)))
 
             pygame.display.flip()  # refresh screen display
             self.clock.tick(60)  # wait until next frame (runs 60FPS)
 
     def game_over(self):
-        won= self.font2.render("You Win!", True, "white")
+        won = self.font2.render("You Win!", True, "white")
         won_rect = won.get_rect()
         won_rect.center = (self.screen_width/2, self.screen_height/6)
 
-        lost= self.font2.render("You Lose!", True, "white")
+        lost = self.font2.render("You Lose!", True, "white")
         lost_rect = lost.get_rect()
         lost_rect.center = (self.screen_width/2, self.screen_height/6)
 
-        self.play_again_rect.center = (self.screen_width/2, self.screen_height/2)
-        self.quit_rect.center = (self.screen_width *.75, self.screen_height/2)
-        self.back_to_main_rect.center = (self.screen_width/4, self.screen_height/2)
+        h = self.screen_height / 2
+        self.play_again_rect.center = (self.screen_width/2, h)
+        self.quit_rect.center = (self.screen_width * .75, h)
+        self.back_to_main_rect.center = (self.screen_width/4, h)
 
         if self.win == -1:
             self.screen.fill("red")
@@ -202,17 +203,17 @@ class casino:
         self.win = 0
         self.game = "coin_toss"
 
-        heads = self.font2.render("HEADS", True, "white")         
+        heads = self.font2.render("HEADS", True, "white")
         heads_rect = heads.get_rect()
-        heads_rect.center = (self.screen_width/4,self.screen_height/2)
+        heads_rect.center = (self.screen_width/4, self.screen_height/2)
 
-        o= self.font.render("or", True, "white")         
+        o = self.font.render("or", True, "white")
         o_rect = o.get_rect()
-        o_rect.center = (self.screen_width/2,self.screen_height/2)
+        o_rect.center = (self.screen_width / 2, self.screen_height/2)
 
-        tails = self.font2.render("TAILS", True, "white")         
+        tails = self.font2.render("TAILS", True, "white")
         tails_rect = tails.get_rect()
-        tails_rect.center = (self.screen_width* .75,self.screen_height/2)
+        tails_rect.center = (self.screen_width * .75, self.screen_height/2)
 
         f_bux = self.font3.render(f"Fiat Bux: {self.fiat_bux}", True, "white")
         f_bux_rect = f_bux.get_rect()
@@ -225,7 +226,7 @@ class casino:
         self.screen.blit(heads, heads_rect)
         self.screen.blit(o, o_rect)
         self.screen.blit(tails, tails_rect)
-        self.screen.blit(f_bux,f_bux_rect)
+        self.screen.blit(f_bux, f_bux_rect)
         self.screen.blit(self.coin_head, self.coin_head_rect)
 
         pygame.display.flip()
@@ -242,41 +243,41 @@ class casino:
                         self.result()
                     if tails_rect.collidepoint(mouse_pos):
                         self.result()
-                        
+
     def result(self):
         self.screen.fill("antiquewhite3")
 
-        result = self.font2.render("It was",True, "white")
+        result = self.font2.render("It was", True, "white")
         result_rect = result.get_rect()
-        result_rect.center = (self.screen_width/2.25,self.screen_height/3.5)
+        result_rect.center = (self.screen_width/2.25, self.screen_height/3.5)
 
-        cont = self.font.render("Continue",True, "white")
+        cont = self.font.render("Continue", True, "white")
         cont_rect = cont.get_rect()
-        cont_rect.center = (self.screen_width/2,self.screen_height*.75)
+        cont_rect.center = (self.screen_width/2, self.screen_height * .75)
 
-        toss = random.randint(1,2)
+        toss = random.randint(1, 2)
         if toss == self.choice:
             self.fiat_bux += 100
-            self.win= 1
+            self.win = 1
             won = self.font.render("You won 100 coins!", True, "white")
             won_rect = won.get_rect()
-            won_rect.center = (self.screen_width/2,self.screen_height/2)
+            won_rect.center = (self.screen_width / 2, self.screen_height/2)
             self.screen.blit(won, won_rect)
 
         else:
             self.win = -1
             lost = self.font.render("You Lose, Try again.", True, "white")
             lost_rect = lost.get_rect()
-            lost_rect.center = (self.screen_width/2,self.screen_height/2)
+            lost_rect.center = (self.screen_width/2, self.screen_height/2)
             self.screen.blit(lost, lost_rect)
         if toss == 1:
-            coin= pygame.transform.scale(self.coin_head, (200,200))
+            coin = pygame.transform.scale(self.coin_head, (200, 200))
             coin_rect = self.coin_head_rect
         else:
-            coin= pygame.transform.scale(self.coin_tail, (200,200))
-            coin_rect= self.coin_tail_rect
+            coin = pygame.transform.scale(self.coin_tail, (200, 200))
+            coin_rect = self.coin_tail_rect
 
-        coin_rect.center = (self.screen_width* .55,self.screen_height/4)
+        coin_rect.center = (self.screen_width * .55, self.screen_height/4)
 
         pygame.draw.rect(self.screen, "gray54", cont_rect)
         self.screen.blit(coin, coin_rect)
@@ -294,7 +295,6 @@ class casino:
                     mouse_pos = pygame.mouse.get_pos()
                     if cont_rect.collidepoint(mouse_pos):
                         self.game_over()
-        
-        
+
 
 casino()
