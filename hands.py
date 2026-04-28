@@ -21,6 +21,7 @@ class BlackJackHand(Hand):
         super().__init__(cards_list)
         # self.money = money
         # self.bet = bet
+
     def check_total(self):
         total = 0
         ace_as_eleven = False

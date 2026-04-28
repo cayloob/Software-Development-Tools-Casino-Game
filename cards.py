@@ -71,8 +71,15 @@ class Deck():
 
     def draw(self):
         # random.randint()
-        nextcard = self.cardslist.pop()
-        return nextcard
+        if self.cardslist:
+            nextcard = self.cardslist.pop()
+            return nextcard
+        else:
+            self.cardslist = makecards()
+            nextcard = self.cardslist.pop()
+            return nextcard
+
+        
 
     def shuffle(self):
         # randomizes the order of cards in the deck
