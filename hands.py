@@ -4,14 +4,20 @@ import pygame
 
 class Hand():
     def __init__(self, cards_list):
-        self.cards_list = cards_list
+        self.__cards_list = cards_list
+        self.clear()
 
     def add_card(self, deck):
-        self.cards_list.append(deck.draw())
+        self.__cards_list.append(deck.draw())
+    def get_cards_list(self):
+        return self.__cards_list
+    
+    def clear(self):
+        self.__cards_list = []
 
     def __str__(self):
         hand = ''
-        for card in self.cards_list:
+        for card in self.__cards_list:
             hand = hand + str(card)+' '
         return hand
 
@@ -25,7 +31,7 @@ class BlackJackHand(Hand):
     def check_total(self):
         total = 0
         ace_as_eleven = False
-        for card in self.cards_list:
+        for card in self.get_cards_list():
             if card.value > 10:
                 total += 10
             elif card.value == 1:

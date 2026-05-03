@@ -54,13 +54,9 @@ class casino:
         self.mute_btn = pygame.transform.scale(self.mute_btn, (60, 60))  # resize if needed
         self.mute_btn_rect = self.mute_btn.get_rect()
 
-
-        self.hand = BlackJackHand()
-        self.deck = Deck()
-        self.deck.shuffle()
+        
         self.win = 0
         self.total = 0
-        self.dealer_hand = dealer.DealerBlackJackHand(deck=self.deck)
 
         self.bet = 0
         self.free_games = 0
@@ -149,10 +145,20 @@ class casino:
         self.total = 0
 
         self.game = "blackjack"
+        self.hand = None
+        self.hand = BlackJackHand()
+        self.hand.clear()
+        self.deck = None
+        self.deck = Deck()
+        self.deck.shuffle()
+        
+
+        self.dealer_hand = dealer.DealerBlackJackHand(deck=self.deck)
+        # self.dealer_hand.clear()
 
         self.fiat_bux -= 100
-
-        while self.running:
+        run_blackjack = True
+        while self.running and run_blackjack:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -175,9 +181,7 @@ class casino:
                             if self.total > 21:
                                 self.win = -1
 
-            if self.win != 0:
-                self.game_over()
-            else:
+            if self.win == 0:
                 # If it is in a normal state run this code
                 self.screen.fill("antiquewhite3")
             # Create the score text and blit to screen
@@ -185,23 +189,35 @@ class casino:
                                              True, "white")
             self.screen.blit(score_surface, (10, 10))
 
-            for i, card in enumerate(self.hand.cards_list):
-                # Making the player's cards appear on the screen
-                card.create()
-                self.screen.blit(card.image,
-                                 ((card.rect.center[0]+(20*i)+100),
-                                  (card.rect.center[1]+(20*i)+100)))
+            if self.hand.get_cards_list():
+                for i, card in enumerate(self.hand.get_cards_list()):
+                    # Making the player's cards appear on the screen
+                    card.create()
+                    self.screen.blit(card.image,
+                                    ((card.rect.center[0]+(20*i)+100),
+                                    (card.rect.center[1]+(20*i)+100)))
 
-            for i, card in enumerate(self.dealer_hand.cards_list):
-                # Making the dealer's cards appear on the screen
-                card.create()
-                self.screen.blit(card.image,
-                                 ((card.rect.center[0]+(20*i)-100),
-                                  (card.rect.center[1]+(20*i)-100)))
-
+            if self.dealer_hand.get_cards_list():
+                for i, card in enumerate(self.dealer_hand.get_cards_list()):
+                    # Making the dealer's cards appear on the screen
+                    card.create()
+                    self.screen.blit(card.image,
+                                    ((card.rect.center[0]+(20*i)-100),
+                                    (card.rect.center[1]+(20*i)-100)))
+            if self.win != 0:
+                self.hand.clear()
+                self.hand = None
+                
+                self.dealer_hand.clear()
+                self.dealer_hand = None
+                
+                run_blackjack = False
+                
+            
             pygame.display.flip()  # refresh screen display
             self.clock.tick(60)  # wait until next frame (runs 60FPS)
-
+        self.game_over()
+        
     def game_over(self):
         won = self.font2.render("You Win!", True, "white")
         won_rect = won.get_rect()
