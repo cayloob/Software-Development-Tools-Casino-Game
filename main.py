@@ -43,6 +43,17 @@ class casino:
         self.choose_bet = self.font.render('Choose your bet', True, ('white'))
         self.choose_bet_rect = self.choose_bet.get_rect(center = (self.screen_width/2, self.screen_height * .8))
 
+        
+        pygame.mixer.init()
+        pygame.mixer.music.load("assets/casino_music3.mp3")
+        pygame.mixer.music.play(-1)  # -1 = loop forever
+        self.is_muted = False
+
+        
+        self.mute_btn = pygame.image.load("assets/mute_button.png").convert_alpha()
+        self.mute_btn = pygame.transform.scale(self.mute_btn, (60, 60))  # resize if needed
+        self.mute_btn_rect = self.mute_btn.get_rect()
+
 
         self.hand = BlackJackHand()
         self.deck = Deck()
@@ -94,6 +105,9 @@ class casino:
         self.wheel = pygame.image.load("assets\wheel_spin2.png.png").convert_alpha()
         self.wheel_rect = self.wheel.get_rect()
         self.wheel_rect.center = (100, self.screen_height - 150)
+
+        self.mute_btn_rect.topleft = (self.screen_width - 70, 10)
+        self.screen.blit(self.mute_btn, self.mute_btn_rect)
 
         pygame.draw.rect(self.screen, "gray54", play_blackjack_rect)
         pygame.draw.rect(self.screen, "gray54", play_slots_rect)
