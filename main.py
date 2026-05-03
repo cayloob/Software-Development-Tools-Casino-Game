@@ -50,7 +50,7 @@ class casino:
         self.is_muted = False
 
         
-        self.mute_btn = pygame.image.load("assets/mute_button.png").convert_alpha()
+        self.mute_btn = pygame.image.load("assets/Mute_Icon.svg").convert_alpha()
         self.mute_btn = pygame.transform.scale(self.mute_btn, (60, 60))  # resize if needed
         self.mute_btn_rect = self.mute_btn.get_rect()
 
