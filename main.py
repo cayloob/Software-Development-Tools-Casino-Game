@@ -47,18 +47,18 @@ class casino:
         pygame.mixer.init()
         pygame.mixer.music.load("assets/casino_music3.mp3")
         pygame.mixer.music.play(-1)  # -1 = loop forever
-        self.is_muted = False
+        self.muted = False
 
-        
-        self.mute_btn = pygame.image.load("assets/Mute_Icon.svg").convert_alpha()
-        self.mute_btn = pygame.transform.scale(self.mute_btn, (60, 60))  # resize if needed
-        self.mute_btn_rect = self.mute_btn.get_rect()
 
-        
+        self.mute_btn = pygame.image.load("assets/volume.png").convert_alpha()
+        self.mute_btn = pygame.transform.scale(self.mute_btn, (60, 60))  
+        self.mute_btn_rect = self.mute_btn.get_rect(center=(self.screen_width - 100, 100) )
+
         self.win = 0
         self.total = 0
 
         self.bet = 0
+        self.spin_count = 0
         self.free_games = 0
 
         self.wheel_spins = 1
@@ -92,7 +92,7 @@ class casino:
         flip_rect = flip.get_rect()
         flip_rect.center = (self.screen_width-100, self.screen_height-100)
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
+        f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
         f_bux_rect = f_bux.get_rect()
         f_bux_rect.center = (250, 100)
 
@@ -102,12 +102,12 @@ class casino:
         self.wheel_rect = self.wheel.get_rect()
         self.wheel_rect.center = (100, self.screen_height - 150)
 
-        self.mute_btn_rect.topleft = (self.screen_width - 70, 10)
-        self.screen.blit(self.mute_btn, self.mute_btn_rect)
-
         pygame.draw.rect(self.screen, "gray54", play_blackjack_rect)
         pygame.draw.rect(self.screen, "gray54", play_slots_rect)
         pygame.draw.rect(self.screen, "gray54", flip_rect)
+
+        self.volume()
+        
         self.screen.blit(play_blackjack, play_blackjack_rect)
         self.screen.blit(play_slots, play_slots_rect)
         self.screen.blit(flip, flip_rect)
@@ -117,6 +117,7 @@ class casino:
         self.screen.blit(f_bux, f_bux_rect)
 
         pygame.display.flip()
+
 
         while self.running:
             for event in pygame.event.get():
@@ -137,6 +138,13 @@ class casino:
 
                     if self.wheel_rect.collidepoint(mouse_pos):
                         self.wheel_spin()
+
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
 
     def blackjack(self):
         self.screen.fill("antiquewhite3")
@@ -217,7 +225,7 @@ class casino:
             pygame.display.flip()  # refresh screen display
             self.clock.tick(60)  # wait until next frame (runs 60FPS)
         self.game_over()
-        
+
     def game_over(self):
         won = self.font2.render("You Win!", True, "white")
         won_rect = won.get_rect()
@@ -243,6 +251,8 @@ class casino:
             self.screen.fill("chartreuse3")
             self.screen.blit(won, won_rect)
 
+        #self.volume()
+
         pygame.draw.rect(self.screen, "gray54", self.play_again_rect)
         pygame.draw.rect(self.screen, "gray54", self.quit_rect)
         pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
@@ -258,16 +268,26 @@ class casino:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.running = False
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.quit_rect.collidepoint(mouse_pos):
                         pygame.quit()
+
                         self.running = False
                     if self.play_again_rect.collidepoint(mouse_pos):
                         if self.game == 'blackjack':
                             self.blackjack()
+
                     if self.back_to_main_rect.collidepoint(mouse_pos):
                         self.main_menu()
+
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
 
     def coin_toss(self):
         self.screen.fill("antiquewhite3")
@@ -295,9 +315,11 @@ class casino:
         self.wheel_rect = self.wheel.get_rect()
         self.wheel_rect.center = (100, self.screen_height - 150)
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
+        f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
         f_bux_rect = f_bux.get_rect()
         f_bux_rect.center = (250, 100)
+
+        #self.volume()
 
         self.coin_head_rect.center = (100, 100)
 
@@ -334,6 +356,13 @@ class casino:
                         if self.wheel_rect.collidepoint(mouse_pos):
                             self.wheel_spin()
 
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
+
 
     def result(self):
         self.screen.fill("antiquewhite3")
@@ -345,9 +374,11 @@ class casino:
         h = self.screen_height *.8
         self.play_again_rect.center = (self.screen_width/2, h)
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
+        f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
         f_bux_rect = f_bux.get_rect()
         f_bux_rect.center = (250, 100)
+
+        #self.volume()
 
         toss = random.randint(1, 2)
         if toss == self.choice:
@@ -409,113 +440,143 @@ class casino:
                         if self.wheel_rect.collidepoint(mouse_pos):
                             self.wheel_spin()
 
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
+
 
     def slots(self):
-        self.screen.fill("antiquewhite3")
+        if self.fiat_bux < 0:
+            self.coin_toss()
 
-        self.game = 'slots'
-
-        if self.bet == 0:
-            pygame.draw.rect(self.screen, "gray54", self.choose_bet_rect)
-            self.screen.blit(self.choose_bet, self.choose_bet_rect)
-            
         else:
-            choose_bet = self.font.render(f"${self.bet}0", True, ('white'))
-            choose_bet_rect= choose_bet.get_rect()
-            choose_bet_rect.center= (self.screen_width/2, self.screen_height * .8)
-            pygame.draw.rect(self.screen, "gray54", choose_bet_rect)
-            self.screen.blit(choose_bet, choose_bet_rect)
+            self.screen.fill("antiquewhite3")
 
-            spin= self.font.render('SPIN', True, ('white'))
-            spin_rect = spin.get_rect(center = (self.screen_width/2, self.screen_height*.72))
-            pygame.draw.rect(self.screen, "hotpink", spin_rect)
-            self.screen.blit(spin, spin_rect)
-            
+            self.game = 'slots'
 
-        title= self.font.render("Welcome to Alfie's Treasure", True, ('white'))
-        title_rect = title.get_rect(center = (self.screen_width/2, self.screen_height/7))
-        self.screen.blit(title, title_rect)
+            #self.volume()
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
-        f_bux_rect = f_bux.get_rect()
-        f_bux_rect.center = (250, 100)
+            if self.bet == 0:
+                pygame.draw.rect(self.screen, "gray54", self.choose_bet_rect)
+                self.screen.blit(self.choose_bet, self.choose_bet_rect)
+                
+            else:
+                choose_bet = self.font.render(f"${self.bet}0", True, ('white'))
+                choose_bet_rect= choose_bet.get_rect()
+                choose_bet_rect.center= (self.screen_width/2, self.screen_height * .8)
+                pygame.draw.rect(self.screen, "gray54", choose_bet_rect)
+                self.screen.blit(choose_bet, choose_bet_rect)
 
-        self.coin_head_rect.center = (100, 100)
+                spin= self.font.render('SPIN', True, ('white'))
+                spin_rect = spin.get_rect(center = (self.screen_width/2, self.screen_height*.72))
+                pygame.draw.rect(self.screen, "hotpink", spin_rect)
+                self.screen.blit(spin, spin_rect)
+                
 
-        self.wheel = pygame.image.load("assets\wheel_spin2.png.png").convert_alpha()
-        self.wheel_rect = self.wheel.get_rect()
-        self.wheel_rect.center = (100, self.screen_height - 150)
+            title= self.font.render("Welcome to Alfie's Treasure", True, ('white'))
+            title_rect = title.get_rect(center = (self.screen_width/2, self.screen_height/7))
+            self.screen.blit(title, title_rect)
 
-        self.back_to_main= self.font3.render("Back to menu", True, ('white'))
-        self.back_to_main_rect = self.back_to_main.get_rect(center = (self.screen_width-100, self.screen_height-100))
-        pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
-        self.screen.blit(self.back_to_main, self.back_to_main_rect)
+            f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
+            f_bux_rect = f_bux.get_rect()
+            f_bux_rect.center = (250, 100)
 
-        self.screen.blit(f_bux, f_bux_rect)
-        self.screen.blit(self.coin_head, self.coin_head_rect)
+            self.coin_head_rect.center = (100, 100)
 
-        if self.wheel_spins > 0:
-            self.screen.blit(self.wheel, self.wheel_rect)
+            self.wheel = pygame.image.load("assets\wheel_spin2.png.png").convert_alpha()
+            self.wheel_rect = self.wheel.get_rect()
+            self.wheel_rect.center = (100, self.screen_height - 150)
 
-        pygame.display.flip()
+            self.back_to_main= self.font3.render("Back to menu", True, ('white'))
+            self.back_to_main_rect = self.back_to_main.get_rect(center = (self.screen_width-100, self.screen_height-100))
+            pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
+            self.screen.blit(self.back_to_main, self.back_to_main_rect)
 
-        while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    self.running = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if self.choose_bet_rect.collidepoint(mouse_pos):
-                        self.bet_select()
+            self.screen.blit(f_bux, f_bux_rect)
+            self.screen.blit(self.coin_head, self.coin_head_rect)
 
-                    if self.back_to_main_rect.collidepoint(mouse_pos):
-                        self.main_menu()
+            if self.wheel_spins > 0:
+                self.screen.blit(self.wheel, self.wheel_rect)
 
-                    if self.wheel_spins > 0:
-                        if self.wheel_rect.collidepoint(mouse_pos):
-                            self.wheel_spin()
+            pygame.display.flip()
 
-                    if spin_rect.collidepoint(mouse_pos):
-                        sm = slots_machine(self.fiat_bux, self.bet)
-                        self.screen.fill("antiquewhite3")
-                        result= sm.gen()
-                        display_nums= result[0]
-                        self.fiat_bux= result[1]
-                        if len(result) > 2:
-                            bonus_game = result[2]
+            while self.running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        self.running = False
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        mouse_pos = pygame.mouse.get_pos()
+                        if self.choose_bet_rect.collidepoint(mouse_pos):
+                            self.bet_select()
 
-                            if bonus_game == 0:
-                                self.wheel_spins += 1
+                        if self.back_to_main_rect.collidepoint(mouse_pos):
+                            self.main_menu()
 
-                                won_wheel_spin = self.font2.render('You Won a Wheel Spin!', True, ('white'))
-                                wws_rect = won_wheel_spin.get_rect(center = (self.screen_width/2, self.screen_height/6))
-                                pygame.draw.rect(self.screen, "gray54", wws_rect)
-                                self.screen.blit(won_wheel_spin, wws_rect)
-                                
-
-                        nums= self.font2.render(str(display_nums), True, ('white'))
-                        nums_rect = nums.get_rect(center = (self.screen_width/2, self.screen_height/2))
-
-                        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
-                        f_bux_rect.center = (250, 100)
+                        if self.mute_btn_rect.collidepoint(mouse_pos):
+                            if self.muted:
+                                self.muted = False
+                            else:
+                                self.muted = True
+                            self.volume()
 
                         if self.wheel_spins > 0:
-                            self.screen.blit(self.wheel, self.wheel_rect)
+                            if self.wheel_rect.collidepoint(mouse_pos):
+                                self.wheel_spin()
 
-                        pygame.draw.rect(self.screen, "gray54", choose_bet_rect)
-                        pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
-                        pygame.draw.rect(self.screen, "hotpink", spin_rect)
-                        self.screen.blit(nums, nums_rect)
-                        self.screen.blit(title,title_rect)
-                        self.screen.blit(self.back_to_main, self.back_to_main_rect)
-                        self.screen.blit(f_bux, f_bux_rect)
-                        self.screen.blit(self.coin_head, self.coin_head_rect)
-                        self.screen.blit(choose_bet, choose_bet_rect)
-                        self.screen.blit(spin, spin_rect)
-                        pygame.display.flip()
+                        if spin_rect.collidepoint(mouse_pos):
+                            self.spin_count += 1
+                            sm = slots_machine(self.fiat_bux, self.bet, self.spin_count, self.free_games)
+                            self.screen.fill("antiquewhite3")
+                            result= sm.gen()
+                            display_nums= result[0]
+                            self.fiat_bux= result[1]
+                            self.spin_count = result[2]
+                            if len(result) > 2:
+                                bonus_game = result[2]
 
-                        
+                                if bonus_game == 0:
+                                    self.wheel_spins += 1
+
+                                    won_wheel_spin = self.font3.render('You Won a Wheel Spin!', True, ('white'))
+                                    wws_rect = won_wheel_spin.get_rect(center = (self.screen_width/2, self.screen_height/2 -200))
+                                    pygame.draw.rect(self.screen, "gray54", wws_rect)
+                                    self.screen.blit(won_wheel_spin, wws_rect)
+
+                            if self.free_games > 0:
+                                free_games = self.font3.render(f'You have {self.free_games} free  games!', True, ('white'))
+                                free_games_rect = free_games.get_rect(center = (self.screen_width/2, self.screen_height/2 -200))
+                                self.screen.blit(free_games, free_games_rect)
+                            
+                                    
+
+                            nums= self.font2.render(str(display_nums), True, ('white'))
+                            nums_rect = nums.get_rect(center = (self.screen_width/2, self.screen_height/2))
+
+                            f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
+                            f_bux_rect.center = (250, 100)
+
+                            if self.wheel_spins > 0:
+                                self.screen.blit(self.wheel, self.wheel_rect)
+
+                            #self.volume()
+
+                            pygame.draw.rect(self.screen, "gray54", choose_bet_rect)
+                            pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
+                            pygame.draw.rect(self.screen, "hotpink", spin_rect)
+                            self.screen.blit(nums, nums_rect)
+                            self.screen.blit(title,title_rect)
+                            self.screen.blit(self.back_to_main, self.back_to_main_rect)
+                            self.screen.blit(f_bux, f_bux_rect)
+                            self.screen.blit(self.coin_head, self.coin_head_rect)
+                            self.screen.blit(choose_bet, choose_bet_rect)
+                            self.screen.blit(spin, spin_rect)
+                            pygame.display.flip()
+
+                            
             
                     
 
@@ -528,7 +589,7 @@ class casino:
         pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
         self.screen.blit(self.back_to_main, self.back_to_main_rect)
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'),True, "white")
+        f_bux = self.font3.render(f'Fiat Bux: {self.fiat_bux}0',True, "white")
         f_bux_rect = f_bux.get_rect()
         f_bux_rect.center = (250, 100)
 
@@ -551,6 +612,8 @@ class casino:
 
         if self.wheel_spins > 0:
             self.screen.blit(self.wheel, self.wheel_rect)
+
+        #self.volume()
 
         pygame.draw.rect(self.screen, "gray54", cb1_rect)
         pygame.draw.rect(self.screen, "gray54", cb2_rect)
@@ -576,9 +639,8 @@ class casino:
                         if self.wheel_rect.collidepoint(mouse_pos):
                             self.wheel_spin()
 
-
                     if cb1_rect.collidepoint(mouse_pos):
-                        self.bet = .80
+                        self.bet = .8
                         self.slots()
                         
                     if cb2_rect.collidepoint(mouse_pos):
@@ -589,15 +651,24 @@ class casino:
                         self.bet = 2.5
                         self.slots()
 
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
+
     def wheel_spin(self):
         colors = {'r': [1,2], 'o' : [15,16], 'y':[13,14], 'g': [11,12], 'c': [9,10], 'b': [7,8], 'p': [5,6], 'pi': [3,4]}
         self.screen.fill("antiquewhite3")
+
+        #self.volume()
 
         title= self.font2.render("Spin the Wheel!", True, ('white'))
         title_rect = title.get_rect(center = (self.screen_width/2, self.screen_height/7))
         self.screen.blit(title, title_rect)
 
-        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'),True, "white")
+        f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0',True, "white")
         f_bux_rect = f_bux.get_rect()
         f_bux_rect.center = (250, 100)
         
@@ -631,24 +702,44 @@ class casino:
                     if self.back_to_main_rect.collidepoint(mouse_pos):
                         self.main_menu()
                     
+                    if self.mute_btn_rect.collidepoint(mouse_pos):
+                        if self.muted:
+                            self.muted = False
+                        else:
+                            self.muted = True
+                        self.volume()
+                    
                     if spins_rect.collidepoint(mouse_pos) and self.wheel_spins > 0:
                         self.screen.fill("antiquewhite3")
+                        
                         self.wheel_spins -= 1
-                        sm = slots_machine(self.fiat_bux, self.bet)
+                        sm = slots_machine(self.fiat_bux, self.bet, self.spin_count, self.free_games)
                         results = sm.wheel_spin()
                         spin = results[0]
-                        self.fiat_bux = results[1]
-                        self.free_games = results[2]
+                        gain = results[1]
+                        self.fiat_bux = results[2]
+                        self.free_games = results[3]
+
+                        if spin == 'c':
+                            gains = self.font.render(f"You won {gain}!", True, ('white'))
+                            gains_rect = gains.get_rect(center = (self.screen_width/2, self.screen_height/2 - 250))
+
+                        else:
+                            gains = self.font.render(f"You won {gain} coins", True, ('white'))
+                            gains_rect = gains.get_rect(center = (self.screen_width/2, self.screen_height/2 - 250))
+
 
                         wheel = (f'assets\wheel_spin{colors[spin][1]}.png.png')
                         self.wheel = self.wheel = pygame.image.load(wheel).convert_alpha()
                         self.wheel = pygame.transform.scale(self.wheel, (500, 500))
                         
-                        f_bux = self.font3.render(('Fiat Bux: ' + str(round(self.fiat_bux, 2)) + '0'), True, "white")
+                        f_bux = self.font3.render(f'Fiat Bux: {round(self.fiat_bux,2)}0', True, "white")
                         f_bux_rect.center = (250, 100)
 
                         spins = self.font.render(f"You Have {self.wheel_spins} spins.", True, ('white'))
                         spins_rect = spins.get_rect(center = (self.screen_width/2, self.screen_height* .75))
+
+                        #self.volume()
 
                         pygame.draw.rect(self.screen, "gray54", spins_rect)
                         pygame.draw.rect(self.screen, "gray54", self.back_to_main_rect)
@@ -658,11 +749,22 @@ class casino:
                         self.screen.blit(spins, spins_rect)
                         self.screen.blit(f_bux, f_bux_rect)
                         self.screen.blit(self.coin_head, self.coin_head_rect)
+                        self.screen.blit(gains, gains_rect)
 
                         pygame.display.flip()
 
 
+    def volume(self):
+        if  not self.muted:
+            pygame.draw.rect(self.screen, "green", self.mute_btn_rect)
+            pygame.mixer.music.play(-1) 
 
+        else:
+            pygame.draw.rect(self.screen, "red", self.mute_btn_rect)
+            pygame.mixer.music.stop() 
+            
+        self.screen.blit(self.mute_btn, self.mute_btn_rect)
 
+        pygame.display.flip()
 
 casino()
